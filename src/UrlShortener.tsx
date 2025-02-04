@@ -13,6 +13,9 @@ function UrlShortener() {
     e.preventDefault();
     setError("");
     try {
+      if (originalUrl === "") {
+        throw new Error("Invalid URL");
+      }
       setLoading(true);
       const response = await fetch("/api/v1", {
         method: "POST",
@@ -67,7 +70,7 @@ function UrlShortener() {
         </form>
       </div>
       {loading && <p className="noData">Loading</p>}
-      {error && <p className="noData">Something went wrong</p>}
+      {error && <p className="noData">Something went wrong: {error}</p>}
       {shortenedUrl && !loading && (
         <div className="result">
           <p>
